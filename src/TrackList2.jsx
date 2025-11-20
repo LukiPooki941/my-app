@@ -1,6 +1,7 @@
 import React from 'react'
-function TrackList_2(){
-
+import Track2 from './Track2'
+function TrackList2(props){
+return(<> <Track2 object={props.object}/> </>)
 }
 
-export default TrackList_2
+export default TrackList2
