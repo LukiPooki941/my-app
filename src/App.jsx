@@ -29,7 +29,7 @@ return(
   <button type='submit'>Search</button>
   </form>
   <SearchResults  object={my_test_array} />
-  <PlayList object={my_test_array}/>
+  <PlayList object2={my_test_array}/>
   <button>Save To Spotify</button>
   </>
 )
