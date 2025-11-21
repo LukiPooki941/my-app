@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
@@ -17,21 +15,30 @@ const my_test_array = [
   album: 'Best of Andrea Day'
 }
 ]
+ 
+
 
 function App() {
+  //const[song, setSong] = useState([])
+
   function handleSubmit(e){
      e.preventDefault()
   }
+
+
+
+
 return(
   <>
   <form onSubmit={handleSubmit}>
   <SearchBar />
   <button type='submit'>Search</button>
   </form>
-  <SearchResults  object={my_test_array} />
+  <SearchResults object={my_test_array} />
   <PlayList object2={my_test_array}/>
   <button>Save To Spotify</button>
   </>
+
 )
 }
 
