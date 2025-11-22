@@ -1,9 +1,9 @@
 import React from 'react'
 import TrackList2 from './TrackList2'
 
-function PlayList(props) {
+function PlayList({object2, setSong }) {
     return (
-<TrackList2 object2={props.object2}/>
+<TrackList2 object2={object2} setSong={setSong}/>
     )
 }
 

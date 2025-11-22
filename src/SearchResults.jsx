@@ -1,9 +1,9 @@
 import React from 'react'
 import TrackList from './TrackList'
 
-function SearchResults(props){
+function SearchResults({setSong, object}){
 return (<>
-<TrackList object={props.object}/>
+<TrackList setSong={setSong} object={object}/>
 </>)
 }
 

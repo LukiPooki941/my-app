@@ -1,8 +1,8 @@
 import React from 'react'
 import Track from './Track'
 
-function TrackList(props){
+function TrackList({ setSong, object }){
 return (<>
-   <Track object={props.object}/>
+   <Track setSong={setSong} object={object}/>
 </>)}
 export default TrackList

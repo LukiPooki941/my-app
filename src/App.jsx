@@ -19,23 +19,20 @@ const my_test_array = [
 
 
 function App() {
-  //const[song, setSong] = useState([])
+  const[song, setSong] = useState([])
 
   function handleSubmit(e){
      e.preventDefault()
   }
-
-
-
-
+  
 return(
   <>
   <form onSubmit={handleSubmit}>
   <SearchBar />
   <button type='submit'>Search</button>
   </form>
-  <SearchResults object={my_test_array} />
-  <PlayList object2={my_test_array}/>
+  <SearchResults setSong={setSong} object={my_test_array} />
+  <PlayList setSong={setSong} object2={song}/>
   <button>Save To Spotify</button>
   </>
 
