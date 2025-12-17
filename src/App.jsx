@@ -25,21 +25,26 @@ const my_test_array = [
 function App() {
   const[song, setSong] = useState([])
   const[playlist, setPlaylist] = useState(defaultName)
+  
 
-  function handleSubmit(e){
-     e.preventDefault()
-    
+  const handleSubmit = (e) => {
+    for(let element in song)
+      {
+        console.log(song[element].uri)
+      }
+        console.log(playlist);
+     e.preventDefault();
+     setSong([]);
+     setPlaylist(defaultName);
   }
   
 return(
   <>
-  <form onSubmit={handleSubmit}>
   <SearchBar />
   <button type='submit'>Search</button>
-  </form>
   <SearchResults setSong={setSong} object={my_test_array} />
   <PlayList playName={playlist} setName={setPlaylist} setSong={setSong} object2={song}/>
-  <button>Save To Spotify</button>
+  <button onClick={handleSubmit}>Save To Spotify</button>
   </>
 
 )

@@ -5,6 +5,7 @@ function handleChange({ target })
 {
       const user_input = target.value
       setName(user_input)
+      
 }
 return(
        <> 
