@@ -1,5 +1,23 @@
 import queryString from 'query-string';
+const client_id = '5512ce31c5264f6eaa0f445c2c9fd0c1';
+const scope = 'user-read-private user-read-email';
+const redirect_uri = 'http://127.0.0.1:5174/callback';
+const url = 'https://accounts.spotify.com/authorize?' +
+    queryString.stringify({
+      response_type: 'code',
+      client_id: client_id,
+      scope: scope,
+      redirect_uri: redirect_uri
+    })
 
+export function Authenticater() {
+    window.location = url;
+    
+}
+
+export function onPageLoad() {
+
+}
 
 
 
