@@ -3,7 +3,8 @@ import './App.css'
 import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 import PlayList from './PlayList'
-import { Authenticater, onPageLoad } from './userauth'
+import { Authenticater} from './userauth'
+import getAuthorization from './userauth'
 const defaultName = "My PlayList";
 const my_test_array = [
 {
@@ -26,6 +27,7 @@ const my_test_array = [
 function App() {
   const[song, setSong] = useState([])
   const[playlist, setPlaylist] = useState(defaultName)
+
   
 
   const handleSubmit = (e) => {
@@ -38,11 +40,11 @@ function App() {
      setSong([]);
      setPlaylist(defaultName);
   }
-  console.log(window.location.href)
   
+  getAuthorization();
 return(
   <>
-  <div onLoad={onPageLoad}>
+  <div>
   <button onClick={Authenticater}>press me</button>
   <SearchBar />
   <button type='submit'>Search</button>
