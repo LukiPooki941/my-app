@@ -9,13 +9,10 @@ const url = 'https://accounts.spotify.com/authorize?' +
       scope: scope,
       redirect_uri: redirect_uri
     })
-let newString = '';
+
 
 export function Authenticater() {
-    window.location = url;
-        let stringer = `${window.location.search}`;
-        newString = stringer.slice(6, stringer.length-1)
-     
+    window.location.href = url;
 }
 
 
@@ -26,16 +23,19 @@ export function Authenticater() {
 
 
 
-
-    const getAuthorization = async () => {
+    /*export const getAuthorization = async () => {
     const client_secret = '6ed25e1051ed4122a2113ad74c57652d';
     const baseURL = 'https://accounts.spotify.com/api/token';
-    if(newString.length > 0){
-    console.log(newString);}
-    else{
-        console.log('error')
-    }
         try{
+            window.location.href = url;
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('code');
+            console.log(code)
+            const body = new URLSearchParams({
+            grant_type: 'authorization_code',
+            code: code,
+            redirect_uri: 'http://127.0.0.1:5174/callback'
+                    });
             const response = await fetch(baseURL, 
                 {
             method:'POST',
@@ -45,22 +45,18 @@ export function Authenticater() {
                     'content-type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Basic ' + btoa(client_id + ':' + client_secret)
             },
-            body: {
-                grant_type:"authorization_code",
-                code: newString,
-                redirect_uri:"http://127.0.0.1:5174/callback"
-                
-            }
+            body:body
         }
     )         
             if(response.ok){
                 const jsonResponse = await response.json()
-                console.log(jsonResponse)
+                api_key = jsonResponse;
+
+
+    
             }
         } catch(e){
             console.log(e);
         }
     }
-    
-
-    export default getAuthorization;
+    export {api_key}*/
