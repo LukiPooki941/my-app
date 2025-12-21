@@ -29,7 +29,8 @@ const my_test_array = [
 function App() {
   const[song, setSong] = useState([])
   const[playlist, setPlaylist] = useState(defaultName)
-  const[number, setNumber] = useState(1);
+  const[truth, setTruth] = useState(false)
+  
   
 
   const client_id = '5512ce31c5264f6eaa0f445c2c9fd0c1';
@@ -48,8 +49,6 @@ function App() {
 
 function Authenticater() {
    window.location.href = url;
-
-
 }
 
   
@@ -78,8 +77,11 @@ function Authenticater() {
     )         
             if(response.ok){
                 const jsonResponse = await response.json()
-                console.log(jsonResponse);
-                api_key = jsonResponse;
+                api_key = `${jsonResponse.access_token}`;
+                console.log(api_key)
+                if(api_key.length > 0){
+                  setTruth(true)
+                }
                
 
     
@@ -103,12 +105,12 @@ function Authenticater() {
   }
 
 
-if(number == 1){
+if(truth == false){
   return(<>
     <h1>Welcome to Jammming</h1>
     <button onClick={() => {Authenticater();}}>press to begin</button>
   </>)
-} else { 
+} else {   
 return(
   <>
   <div>
@@ -124,3 +126,4 @@ return(
 }
 }
 export default App
+
