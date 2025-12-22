@@ -85,7 +85,7 @@ return () => {
               jsonResponse = await response.json()
                 console.log(jsonResponse)
                 api_key = `${jsonResponse.access_token}`;
-               setTimer(10);
+               setTimer(jsonResponse.expires_in);
                if(api_key.length > 0){
                   setTruth(true)
                } 
