@@ -4,10 +4,9 @@ import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 import PlayList from './PlayList'
 import queryString from 'query-string';
-
-
-const defaultName = "My PlayList";
 let api_key = '';
+let jsonResponse = {};
+const defaultName = "My PlayList";
 const my_test_array = [
 {
   name: 'sound of silence',    
@@ -23,15 +22,22 @@ const my_test_array = [
 ];
 
 
- 
-
 
 function App() {
   const[song, setSong] = useState([])
   const[playlist, setPlaylist] = useState(defaultName)
   const[truth, setTruth] = useState(false)
-  
-  
+  const[time, setTime] = useState(0);
+  const[timer, setTimer] = useState(0)
+
+ 
+useEffect(() => { const intervalId = setInterval(() => {setTime(prev => prev + 1)}, 1000) 
+return () => {
+  clearInterval(intervalId)
+}}, [])
+
+
+
 
   const client_id = '5512ce31c5264f6eaa0f445c2c9fd0c1';
   const redirect_uri = 'http://127.0.0.1:5174/callback';
@@ -45,11 +51,9 @@ function App() {
       scope: scope,
       redirect_uri: redirect_uri
     })
+  
 
 
-function Authenticater() {
-   window.location.href = url;
-}
 
   
   const getAuthorization = async () => {
@@ -74,24 +78,41 @@ function Authenticater() {
             },
             body: body
         }
-    )         
-            if(response.ok){
-                const jsonResponse = await response.json()
-                api_key = `${jsonResponse.access_token}`;
-                console.log(api_key)
-                if(api_key.length > 0){
-                  setTruth(true)
-                }
-               
-
     
-            }
-        } catch(e){
+            )
+          
+            if(response.ok){
+              jsonResponse = await response.json()
+                console.log(jsonResponse)
+                api_key = `${jsonResponse.access_token}`;
+               setTimer(10);
+               if(api_key.length > 0){
+                  setTruth(true)
+               } 
+               }} catch(e){
             console.log(e);
         }
-      }
 
-      getAuthorization()
+    }
+
+function Authenticater() {
+   window.location.href = url;
+   
+}
+   useEffect( () =>  {getAuthorization()}, [])
+   useEffect(() => {if(time == timer){
+        setTruth(false)
+        api_key = ''
+        jsonResponse = {}
+}}, [timer, time])
+      
+
+      
+      console.log(api_key)
+      console.log(time)
+      console.log(timer)
+
+
 
   const handleSubmit = (e) => {
     for(let element in song)
@@ -103,6 +124,10 @@ function Authenticater() {
      setSong([]);
      setPlaylist(defaultName);
   }
+  
+
+
+
 
 
 if(truth == false){
@@ -113,6 +138,7 @@ if(truth == false){
 } else {   
 return(
   <>
+  <h3>{time}</h3>
   <div>
   <SearchBar />
   <button type='submit'>Search</button>
