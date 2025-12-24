@@ -61,7 +61,6 @@ return () => {
           
             const params = new URLSearchParams(window.location.search);
             const code = params.get('code');
-            console.log(code)
             const body = new URLSearchParams({
             grant_type: 'authorization_code',
             code: code,
@@ -83,11 +82,10 @@ return () => {
           
             if(response.ok){
               jsonResponse = await response.json()
-                console.log(jsonResponse)
                 api_key = `${jsonResponse.access_token}`;
                setTimer(jsonResponse.expires_in);
                if(api_key.length > 0){
-                  setTruth(true)
+                setTruth(true);
                } 
                }} catch(e){
             console.log(e);
@@ -99,6 +97,12 @@ function Authenticater() {
    window.location.href = url;
    
 }
+
+   useEffect(() => {if(api_key.length > 0){
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.delete('code')
+        history.replaceState(null, '', `${redirect_uri}`)
+               } })
    useEffect( () =>  {getAuthorization()}, [])
    useEffect(() => {if(time == timer){
         setTruth(false)
@@ -107,7 +111,7 @@ function Authenticater() {
 }}, [timer, time])
       
 
-      
+      console.log(jsonResponse)
       console.log(api_key)
       console.log(time)
       console.log(timer)
