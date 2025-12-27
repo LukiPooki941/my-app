@@ -7,6 +7,7 @@ import queryString from 'query-string';
 let api_key = '';
 let jsonResponse = {};
 const defaultName = "My PlayList";
+let testArray = [];
 const my_test_array = [
 {
   name: 'sound of silence',    
@@ -29,6 +30,9 @@ function App() {
   const[truth, setTruth] = useState(false)
   const[time, setTime] = useState(0);
   const[timer, setTimer] = useState(0)
+  const[search, setSearch] =  useState('')
+
+     
 
  
 useEffect(() => { const intervalId = setInterval(() => {setTime(prev => prev + 1)}, 1000) 
@@ -102,7 +106,7 @@ function Authenticater() {
         const newUrl = new URL(window.location);
         newUrl.searchParams.delete('code')
         history.replaceState(null, '', `${redirect_uri}`)
-               } })
+               } }, [])
    useEffect( () =>  {getAuthorization()}, [])
    useEffect(() => {if(time == timer){
         setTruth(false)
@@ -129,10 +133,28 @@ function Authenticater() {
      setPlaylist(defaultName);
   }
   
+const handleSearch = async (e) => {
+  try{
+const url = `https://api.spotify.com/v1/search?q=${search}&type=track`
+const response = await fetch(url, { headers:{
+'authorization': 'Bearer ' + api_key
+  }})
+  if(response.ok){
+    const jsonResponse = await response.json()
+    const object = jsonResponse;
+    testArray = object.items
+    
+  }
+  } catch(e){
+    console.log(e)
+  }
+}
 
-
-
-
+function handleChange({ target }){
+        const user_input = target.value
+        setSearch(user_input)
+     }
+console.log(testArray)
 
 if(truth == false){
   return(<>
@@ -144,8 +166,8 @@ return(
   <>
   <h3>{time}</h3>
   <div>
-  <SearchBar />
-  <button type='submit'>Search</button>
+  <SearchBar handleChange={handleChange} search={search}/>
+  <button onClick={handleSearch}>Search</button>
   <SearchResults setSong={setSong} object={my_test_array} />
   <PlayList playName={playlist} setName={setPlaylist} setSong={setSong} object2={song}/>
   <button onClick={handleSubmit}>Save To Spotify</button>
