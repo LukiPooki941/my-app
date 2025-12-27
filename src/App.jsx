@@ -141,8 +141,8 @@ const response = await fetch(url, { headers:{
   }})
   if(response.ok){
     const jsonResponse = await response.json()
-    const object = jsonResponse;
-    testArray = object.items
+    testArray = jsonResponse;
+    //testArray = object.items
     
   }
   } catch(e){
