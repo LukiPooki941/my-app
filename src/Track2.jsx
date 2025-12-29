@@ -3,8 +3,8 @@ function Track2({object2, setSong}){
   return(
         <>
     {object2.map((element, index)=> (
-<div onClick={() => {setSong((prev) => (prev.filter(s => s != element)))}} key={index}><h2>{element.name}(<span>{element.artist}</span>)</h2>
-<h6>{element.album}</h6>
+<div onClick={() => {setSong((prev) => (prev.filter(s => s != element)))}} key={index}><h2>{element.name}(<span>{element.artists[0].name}</span>)</h2>
+<h6>{element.album.name}</h6>
 <p>-</p>
 </div>
     ))

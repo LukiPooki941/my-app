@@ -141,8 +141,10 @@ const response = await fetch(url, { headers:{
   }})
   if(response.ok){
     const jsonResponse = await response.json()
-    testArray = jsonResponse;
+    testArray = jsonResponse.tracks.items;
     //testArray = object.items
+    console.log(testArray)
+    
     
   }
   } catch(e){
@@ -154,7 +156,7 @@ function handleChange({ target }){
         const user_input = target.value
         setSearch(user_input)
      }
-console.log(testArray)
+
 
 if(truth == false){
   return(<>
@@ -168,7 +170,7 @@ return(
   <div>
   <SearchBar handleChange={handleChange} search={search}/>
   <button onClick={handleSearch}>Search</button>
-  <SearchResults setSong={setSong} object={my_test_array} />
+  <SearchResults setSong={setSong} object={testArray} />
   <PlayList playName={playlist} setName={setPlaylist} setSong={setSong} object2={song}/>
   <button onClick={handleSubmit}>Save To Spotify</button>
   </div>
