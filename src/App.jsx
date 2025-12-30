@@ -7,6 +7,7 @@ import queryString from 'query-string';
 let api_key = '';
 let jsonResponse = {};
 const defaultName = "My PlayList";
+let user_id = ''
 let testArray = [];
 const my_test_array = [
 {
@@ -120,9 +121,42 @@ function Authenticater() {
       console.log(time)
       console.log(timer)
 
+const handleSubmit = async(e) => {
+  e.preventDefault();
+  try{
+     const response = await fetch('https://api.spotify.com/v1/me', {headers:{
+      'authorization': 'Bearer ' + api_key
+     }});
+     if(response.ok){
+      const jsonResponse = await response.json();
+      user_id = jsonResponse.id
+      console.log(user_id)
+      postPlaylist()
+     }
+  } catch(e) {
+     console.log(e)
+  }
+}
+
+const postPlaylist = async() => {
+try{
+const body = new URLSearchParams({
+    "name": playlist,
+    "description": "New playlist description",
+    "public": false
+})
+const response = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {method: 'POST', headers: { 'authorization': 'Bearer ' + api_key, 'content-type': 'application/x-www-form-urlencoded'}, body:body});
+if(response.ok){
+  const jsonResponse = response.json();
+  console.log(jsonResponse)
+}
+}catch(e){
+console.log(e)
+}
+}
 
 
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     for(let element in song)
       {
         console.log(song[element].uri)
@@ -131,7 +165,7 @@ function Authenticater() {
      e.preventDefault();
      setSong([]);
      setPlaylist(defaultName);
-  }
+  }*/
   
 const handleSearch = async (e) => {
   try{
