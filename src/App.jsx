@@ -48,7 +48,7 @@ return () => {
   const redirect_uri = 'http://127.0.0.1:5174/callback';
   const client_secret = '6ed25e1051ed4122a2113ad74c57652d';
   const baseURL = 'https://accounts.spotify.com/api/token';
-  const scope = 'user-read-private user-read-email';
+  const scope = 'playlist-modify-public playlist-modify-private';
   const url = 'https://accounts.spotify.com/authorize?' +
     queryString.stringify({
       response_type: 'code',
@@ -140,14 +140,12 @@ const handleSubmit = async(e) => {
 
 const postPlaylist = async() => {
 try{
-const body = new URLSearchParams({
-    "name": playlist,
-    "description": "New playlist description",
-    "public": false
-})
-const response = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {method: 'POST', headers: { 'authorization': 'Bearer ' + api_key, 'content-type': 'application/x-www-form-urlencoded'}, body:body});
+const body = {
+    "name": playlist
+}
+const response = await fetch(`https://api.spotify.com/v1/users/${user_id}/playlists`, {method: 'POST', headers: { 'authorization': 'Bearer ' + api_key, 'Content-Type': 'application/json'}, body: JSON.stringify(body)});
 if(response.ok){
-  const jsonResponse = response.json();
+  const jsonResponse = await response.json();
   console.log(jsonResponse)
 }
 }catch(e){
