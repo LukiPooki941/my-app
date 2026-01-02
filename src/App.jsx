@@ -9,19 +9,8 @@ let jsonResponse = {};
 const defaultName = "My PlayList";
 let user_id = ''
 let testArray = [];
-const my_test_array = [
-{
-  name: 'sound of silence',    
-  artist: 'Simon and Garfunkel', 
-  album: 'The best of Simon and Garfunkel',
-  uri: "abc3g42i2iwem"
-}, {
-  name: 'Rise',
-  artist: 'Andrea Day',
-  album: 'Best of Andrea Day',
-  uri: "jewnfjkqwfbq984923huief"
-}
-];
+let playlistId = '';
+let uri = [];
 
 
 
@@ -32,6 +21,7 @@ function App() {
   const[time, setTime] = useState(0);
   const[timer, setTimer] = useState(0)
   const[search, setSearch] =  useState('')
+ // const[uri, setURI] = useState([])
 
      
 
@@ -147,13 +137,37 @@ const response = await fetch(`https://api.spotify.com/v1/users/${user_id}/playli
 if(response.ok){
   const jsonResponse = await response.json();
   console.log(jsonResponse)
+  playlistId = jsonResponse.id
+  addSongs();
+  
 }
 }catch(e){
 console.log(e)
 }
 }
 
+const addSongs = async() => {
+  
+try{
+song.forEach(track => {uri.push(track.uri)})
+   //setURI(prev => ([...prev, track.uri]))
+  //uri.push(track.uri)
 
+console.log(uri)
+const body = {
+  "uris": uri,
+    "position": 0
+}
+const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {method: 'POST', headers: { 'authorization': 'Bearer ' + api_key, 'Content-Type': 'application/json'}, body: JSON.stringify(body)});
+if(response.ok){
+  const jsonResponse = await response.json();
+  console.log(jsonResponse)
+
+}
+}catch(e){
+console.log(e)
+}
+}
   /*const handleSubmit = (e) => {
     for(let element in song)
       {
