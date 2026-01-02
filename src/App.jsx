@@ -97,7 +97,7 @@ function Authenticater() {
         const newUrl = new URL(window.location);
         newUrl.searchParams.delete('code')
         history.replaceState(null, '', `${redirect_uri}`)
-               } }, [])
+               } }, [api_key])
    useEffect( () =>  {getAuthorization()}, [])
    useEffect(() => {if(time == timer){
         setTruth(false)
