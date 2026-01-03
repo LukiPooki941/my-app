@@ -10,7 +10,7 @@ const defaultName = "My PlayList";
 let user_id = ''
 let testArray = [];
 let playlistId = '';
-let uri = [];
+//let uri = [];
 
 
 
@@ -149,7 +149,7 @@ console.log(e)
 const addSongs = async() => {
   
 try{
-song.forEach(track => {uri.push(track.uri)})
+const uri = song.map(track => (track.uri))
    //setURI(prev => ([...prev, track.uri]))
   //uri.push(track.uri)
 
@@ -161,8 +161,7 @@ const body = {
 const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {method: 'POST', headers: { 'authorization': 'Bearer ' + api_key, 'Content-Type': 'application/json'}, body: JSON.stringify(body)});
 if(response.ok){
   const jsonResponse = await response.json();
-  console.log(jsonResponse)
-
+  console.log(jsonResponse);
 }
 }catch(e){
 console.log(e)
@@ -202,7 +201,6 @@ function handleChange({ target }){
         const user_input = target.value
         setSearch(user_input)
      }
-
 
 if(truth == false){
   return(<>
