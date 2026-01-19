@@ -22,6 +22,7 @@ function App() {
   const[timer, setTimer] = useState(0)
   const[search, setSearch] =  useState('')
  // const[uri, setURI] = useState([])
+ const[isLoading, setLoading] = useState(false);
 
      
 
@@ -35,7 +36,8 @@ return () => {
 
 
   const client_id = '5512ce31c5264f6eaa0f445c2c9fd0c1';
-  const redirect_uri = 'http://127.0.0.1:5174/callback';
+  //const redirect_uri = 'http://127.0.0.1:5174/callback';
+  const redirect_uri = window.location.origin + "/callback";
   const client_secret = '6ed25e1051ed4122a2113ad74c57652d';
   const baseURL = 'https://accounts.spotify.com/api/token';
   const scope = 'playlist-modify-public playlist-modify-private';
@@ -113,6 +115,7 @@ function Authenticater() {
 
 const handleSubmit = async(e) => {
   e.preventDefault();
+  setLoading(true);
   try{
      const response = await fetch('https://api.spotify.com/v1/me', {headers:{
       'authorization': 'Bearer ' + api_key
@@ -162,6 +165,9 @@ const response = await fetch(`https://api.spotify.com/v1/playlists/${playlistId}
 if(response.ok){
   const jsonResponse = await response.json();
   console.log(jsonResponse);
+  setLoading(false);
+  setSong([]);
+  testArray = [];
 }
 }catch(e){
 console.log(e)
@@ -202,12 +208,23 @@ function handleChange({ target }){
         setSearch(user_input)
      }
 
+     if(isLoading == true){
+
+return(
+<>
+  <h1>Loading...</h1>
+</>
+)
+}
+
 if(truth == false){
   return(<>
     <h1>Welcome to Jammming</h1>
     <button onClick={() => {Authenticater();}}>press to begin</button>
   </>)
-} else {   
+
+}  
+ else {   
 return(
   <>
   <h3>{time}</h3>
