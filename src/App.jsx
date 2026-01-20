@@ -36,8 +36,8 @@ return () => {
 
 
   const client_id = '5512ce31c5264f6eaa0f445c2c9fd0c1';
-  //const redirect_uri = window.location.origin + "/callback";
-  const redirect_uri = window.location.origin;
+  const redirect_uri = window.location.origin + "/callback";
+  //const redirect_uri = window.location.origin;
   const client_secret = '6ed25e1051ed4122a2113ad74c57652d';
   const baseURL = 'https://accounts.spotify.com/api/token';
   const scope = 'playlist-modify-public playlist-modify-private';
